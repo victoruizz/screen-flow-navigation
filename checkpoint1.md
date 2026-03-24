@@ -2,6 +2,22 @@
 
 ---
 
+## Descrição do projeto
+
+Este projeto é um aplicativo Android desenvolvido com **Jetpack Compose**, com foco na navegação entre telas utilizando o **Navigation Compose**. O app é composto por um menu principal que dá acesso a diferentes telas (Perfil, Pedidos, entre outras), e foi evoluído incrementalmente para demonstrar diferentes formas de passar dados entre telas por meio de rotas de navegação.
+
+O repositório foi construído como continuação da atividade anterior, expandindo as funcionalidades já existentes sem recriar o projeto do zero.
+
+---
+
+## Objetivo da prova
+
+A prova tem como objetivo avaliar a capacidade de evoluir um projeto já iniciado, aplicando conceitos de navegação entre telas no Android utilizando **Jetpack Compose Navigation**, com foco na passagem de parâmetros.
+
+O aluno deverá demonstrar domínio técnico e entendimento do código já existente, sendo capaz de expandi-lo de forma consistente e documentada, explicando detalhadamente o funcionamento do código em cada etapa implementada.
+
+---
+
 ## Commit 1 — Passagem de parâmetros obrigatórios na tela de Perfil
 
 Neste commit eu implementei a passagem de um parâmetro dinâmico pela rota de navegação para a tela de Perfil. Até então, quando o usuário clicava no botão para ir ao perfil, ele era levado para uma tela genérica sem nenhuma informação personalizada. A ideia aqui foi fazer com que a rota carregue um dado — no caso o nome do usuário — e esse dado seja exibido diretamente na tela.
@@ -72,3 +88,30 @@ Neste commit eu simplesmente passei um valor real para o parâmetro opcional `cl
 O botão que antes navegava para `"pedidos"` (sem nenhum valor, usando o padrão `"Cliente Genérico"`) passou a navegar para `"pedidos?cliente=Cliente XPTO"`. Com isso, a tela de Pedidos agora exibe `"PEDIDOS - Cliente XPTO"` ao ser aberta.
 
 Isso mostra na prática como funciona a passagem de um parâmetro opcional: a rota já estava preparada para receber o valor desde o commit anterior, e aqui eu apenas comecei a enviá-lo de fato.
+
+---
+
+## Commit 4 — Passagem de múltiplos parâmetros
+
+Neste commit eu adicionei um segundo parâmetro obrigatório na tela de Perfil: a `idade`. Além de `nome`, a rota agora também recebe um número inteiro, o que mostra como passar múltiplos parâmetros de tipos diferentes pela navegação.
+
+### O que foi alterado
+
+**`PerfilScreen.kt` — novo parâmetro `idade`**
+
+A função recebeu o parâmetro `idade` do tipo `Int`. O texto da tela passou a exibir `"PERFIL - Fulano de Tal tem 27 anos"`, combinando os dois valores recebidos.
+
+**`MainActivity.kt` — rota com dois parâmetros tipados**
+
+A rota foi atualizada de `"perfil/{nome}"` para `"perfil/{nome}/{idade}"`. Desta vez foi necessário declarar os `navArgument` para cada parâmetro e definir o tipo de cada um usando `NavType`: `StringType` para o nome e `IntType` para a idade. Isso é importante porque o Navigation Compose precisa saber como converter o valor que vem como texto na URL para o tipo correto no código.
+
+**`MenuScreen.kt` — botão de Perfil com dois valores na rota**
+
+A navegação foi atualizada para `"perfil/Fulano de Tal/27"`, passando nome e idade separados por `/` na própria rota.
+
+### Resumo do fluxo
+
+1. O usuário clica no botão de Perfil na `MenuScreen`.
+2. O `navController` navega para `"perfil/Fulano de Tal/27"`.
+3. O Navigation Compose extrai `"Fulano de Tal"` como `String` e `27` como `Int`.
+4. A `PerfilScreen` recebe os dois valores e exibe `"PERFIL - Fulano de Tal tem 27 anos"`.
