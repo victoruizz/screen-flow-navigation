@@ -58,3 +58,17 @@ A rota foi definida como `"pedidos?cliente={cliente}"`. Para parâmetros opciona
 1. Ao navegar para a tela de Pedidos, o `cliente` pode ou não ser passado na rota.
 2. Se for passado: `navController.navigate("pedidos?cliente=João")` → exibe `"PEDIDOS - João"`.
 3. Se não for passado: `navController.navigate("pedidos")` → exibe `"PEDIDOS - Cliente Genérico"`.
+
+---
+
+## Commit 3 — Inserindo valor ao parâmetro opcional na tela de Pedidos
+
+Neste commit eu simplesmente passei um valor real para o parâmetro opcional `cliente` que foi criado no commit anterior. A mudança foi só na `MenuScreen`, no botão que navega para a tela de Pedidos.
+
+### O que foi alterado
+
+**`MenuScreen.kt` — botão de Pedidos com cliente definido**
+
+O botão que antes navegava para `"pedidos"` (sem nenhum valor, usando o padrão `"Cliente Genérico"`) passou a navegar para `"pedidos?cliente=Cliente XPTO"`. Com isso, a tela de Pedidos agora exibe `"PEDIDOS - Cliente XPTO"` ao ser aberta.
+
+Isso mostra na prática como funciona a passagem de um parâmetro opcional: a rota já estava preparada para receber o valor desde o commit anterior, e aqui eu apenas comecei a enviá-lo de fato.
